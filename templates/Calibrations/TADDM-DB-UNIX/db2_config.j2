@@ -1,0 +1,38 @@
+# version:1.0
+# # config.txt - 2018/04/04
+# # Configuration File for 
+# #   DB2 collectors (UNIX)
+# # File metadata
+# #
+# file-information
+  # type = collector-configuration
+  # collector = DB2V4
+  # file = db2_config.txt
+  # version = 1
+  # date = "2018/04/04"
+  # comment = "Configuration File for DB2 collectors (UNIX)"
+
+# #for unix.any.db2.DB2DbAuthV4
+# # Define User and Group accounts
+# accounts-parameters
+  # type = authparm
+  # user-name = user1
+  # user-name = user2
+  # user-name = user3
+  # group-name = group1
+  # group-name = group2
+  # auth-type = DBADMAUTH
+  # auth-type = CREATETABAUTH
+  # auth-type = CONNECTAUTH
+
+# #for unix.any.db2.DB2DbInstanceConfigV4
+# inst-conf
+  # type = confparm 
+  # config-param-name = DIR
+  # config-param-name = VERSION
+
+# #for unix.any.db2.DB2BkupDirPermsV4, unix.any.db2.DB2DbDirPermsV4, unix.any.db2.DB2LogDirPermsV4
+# unix-owner
+  # type = ownerparm
+  # owner-name = 
+  # owner-group =

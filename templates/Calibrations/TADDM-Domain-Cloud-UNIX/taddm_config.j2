@@ -1,0 +1,37 @@
+# version:1.0
+# ===========================================================================
+# Licensed Materials - Property of IBM
+#
+# (C) Copyright IBM Corp. 2018 All Rights Reserved.
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+# ===========================================================================
+# Use this file to override unix.any.taddmV1 collector parameters.
+# Collector parameters must be specified in the taddm-parameters section:
+#     Lines starting with # are processed as comments 
+#     # APPLICATION _PATH -- contains value of TADDM application install path (eg: /opt/TIV or /opt/IBM etc.,
+#
+#     Please Note: Any String value with non alphanumeric character should be surrounded with double quotes. 
+#	<VALUE> -- should be replaced by YOUR values
+# 
+
+#file-informations
+#        type = "collector-configuration"
+#        collector = TaddmV1
+#        file = config.template
+#        version = 1
+#        date = "2020/04/14"
+#        comment = "Configuration file to override TaddmV1 collector parameters"
+
+# # Define first server
+# #
+# server1
+      # APPLICATION_PATH = "<APPLICATION_INSTALLATION_PATH>"
+
+# # Define second server
+# #
+# server2
+      # APPLICATION_PATH = "<APPLICATION_INSTALLATION_PATH>"
+
+

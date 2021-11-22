@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cdf:Benchmark xmlns:scm="?" xmlns:cdf="http://checklists.nist.gov/xccdf/1.0" id="1">
+
+    <cdf:Group>
+           <!-- Define or override rules here -->
+           <!-- define or override collectors here -->
+    </cdf:Group>
+
+</cdf:Benchmark>

@@ -1,0 +1,47 @@
+# version:1.0
+# ===========================================================================
+# Licensed Materials - Property of IBM
+#
+# (C) Copyright IBM Corp. 2017 All Rights Reserved.
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+# ===========================================================================
+# Use this file to override win.any.vCenter collector parameters.
+# Collector parameters must be specified in the vCenter section:
+#     Lines starting with # are processed as comments
+#     E.G.:
+#     vCenter
+#     #Parameters
+#     SERVER = localhost
+#     USER = administrator@vsphere.local
+#     PASSWORD = p@ssw0rd
+#
+#     Please Note: Any String value with non alphanumeric character should
+#                   be surrounded with double quotes. 
+#     Please note that 
+#
+#
+# Mandatory Parameters for this collector:
+# ---------------------------------------
+#	USER = System user with admin rights. For expl: Administrator
+#	PASSWORD = this user's password. For expl: "Adm12345"
+#	SERVER = vCenter server which contain's specified user.
+#	<VALUE> -- should be replaced by YOUR values
+#
+#file-information
+#        type = collector-configuration
+#        collector = vCenterV1
+#        file = vCenter_config.txt
+#        version = 1
+#        date = "2018/09/01"
+#        comment = "Configuration file for win.any.vCenterV1 collector"
+# Parameters
+#vCenter
+#        SERVER = <VALUE>
+#        USER = <VALUE>
+#        PASSWORD = <VALUE>
+#vCenter2
+#        SERVER = <VALUE>
+#        USER = <VALUE>
+#        PASSWORD = <VALUE>

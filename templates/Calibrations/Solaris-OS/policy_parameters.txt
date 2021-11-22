@@ -1,0 +1,32 @@
+# version:1.0
+[integer]
+Password MAX Age shadow Customer Accounts=91
+SUN 10 Password History=8
+SUN 10 Password MINALPHA=1
+Password MIN Length=15
+Default Umask=077
+Password MINWEEKS passwd=1
+Password MAX Age shadow IBM Accounts=91
+UIDLabelling=0
+SUN 10 Password DISABLETIME=20
+Account Login Retries=5
+Peruserid MAXDAYS settings=91
+SUN 10 Password MINNONALPHA=1
+Password MAXWEEKS passwd=13
+[string_list]
+Prohibited TCP Ports='9','7','69','19','70','15','11','110','13','21','23'
+UserIDs Excluded Password='netadm','netcfg','noaccess','nuucp','openldap','mysql','pkg5srv','postgres','smmsp','sms-svc','svctag','sys','upnp','uucp','webservd','xvm','zfssnap','adm','aiuser','bin','daemon','dhcpserv','dladm','ftp','gdm','imnadm','listen','lp','ikeuser'
+Allowed Groups='adm','bin','cimsrvr','daemon','ftp','gdm','imnadm','lp','mail','mlocate','mysql','netadm','noaccess','nobody','nuucp','openldap','other','pkg5srv','postgres','root','slocate','smmsp','sms','staff','sys','sysadmin','tty','upnp','uucp','webservd','xvm'
+Prohibited FRMI Process Names='svc:/application/management/net-snmp:default','svc:/system/fm/snmp-notify:default','svc:/network/ftp:default','svc:/network/telnet:default','svc:/network/rpc/rex:default','svc:/network/chargen:dgram','svc:/network/chargen:stream','svc:/network/daytime:dgram','svc:/network/daytime:stream','svc:/network/discard:dgram','svc:/network/discard:stream','svc:/network/echo:dgram','svc:/network/echo:stream','svc:/network/finger:default','svc:/network/rpc/wall:default','svc:/network/rpc/spray:default','svc:/network/talk:default','svc:/network/tftp/udp6:default','svc:/network/time:dgram','svc:/network/time:stream','svc:/network/rpc/rstat:default','svc:/network/nfs/server:default'
+Prohibited FRMI Process Names SUN11='svc:/network/chargen:dgram','svc:/network/chargen:stream','svc:/network/daytime:dgram','svc:/network/daytime:stream','svc:/network/discard:dgram','svc:/network/discard:stream','svc:/network/echo:dgram','svc:/network/echo:stream','svc:/network/finger:default','svc:/network/rpc/rusers:default','svc:/network/rpc/wall:default','svc:/network/rpc/spray:default','svc:/network/talk:default','svc:/network/tftp/udp6:default','svc:/network/time:dgram','svc:/network/time:stream','svc:/network/rpc/rstat:default','svc:/network/nfs/server:default','svc:/application/management/net-snmp:default','svc:/system/fm/snmp-notify:default','svc:/network/telnet:default','svc:/network/ftp:default','svc:/network/rpc/rex:default'
+Prohibited RPC Process Names='rwho','cachefsd','rstat','rusersd','sprayd','pcnfsd','rexd','rpop','rwalld','snmpXdmid','sysstatd','tftpd','cmsd','systat','talk','time','ttdbserverd','mountd','sadmind','rstatd','rusersd'
+INVALID SHELL='/bin/false','/usr/bin/false'
+Prohibited UDP Ports='19','13','9','7','11','69','513'
+Prohibited Process Names='time','tftp','ttdbserverd','rwho','rstatd','mountd','sadmind','cachefsd','snmpXdmid','telnet','ftp','rexd','chargen','cmsd','daytime','discard','echo','finger','netstat','ruserd','rusersd','rwalld','sprayd','sysstat','talk'
+Allowed Owners='adm','aiuser','bin','daemon','dhcpserv','dladm','ftp','gdm','ikeuser','imnadm','listen','lp','mysql','netadm','netcfg','noaccess','nuucp','openldap','pkg5srv','postgres','root','smmsp','sms-svc','svctag','sys','upnp','uucp','webservd','xvm','zfssnap'
+Prohibited INETD Process Names='telnet','ftp','rexd','chargen','cmsd','daytime','discard','echo','finger','netstat','ruserd','rusersd','rwalld','sprayd','sysstat','talk','time','tftp','ttdbserverd','rwho','rstatd','mountd','sadmind','cachefsd','snmpXdmid'
+User GECOS Regexp Exclude=':none:'
+[string]
+Date of Policy Modification=20210210
+Business Use Notice Text=%this%system%should%be%used%for%conducting%ibm%business%or%for%purposes%authorized%by%ibm%management%it%is%mandatory%to%comply%with%all%the%requirements%listed%in%the%applicable%security%policy%and%only%process%or%store%the%data%classes%approved%for%this%asset%type%%use%is%subject%to%audit%at%any%time%by%ibm%management%
+Policy Version=v6.1

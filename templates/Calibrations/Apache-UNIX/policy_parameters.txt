@@ -1,0 +1,8 @@
+# version:1.0
+[string]
+Data of Policy Modification=21/09/2021
+OSRPermsText=________w_
+Policy Version=v5.0
+[string_list]
+Privileged Groups='adm','audit','bin','cron','ecs','hacmp','haemrm','imnadm','ipsec','ldap','lp','mail','pconsole','printq','security','shutdown','snapp','sys','system','uucp'
+LogDirectives='transferlog','customlog'

@@ -1,0 +1,38 @@
+# version:1.0
+# ===========================================================================
+# Licensed Materials - Property of IBM
+#
+# (C) Copyright IBM Corp. 2018 All Rights Reserved.
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+# ===========================================================================
+# Use this file to override unix.any.NetCoolV1 collector parameters.
+# Collector parameters must be specified in the netcool-parameters section:
+#     Lines starting with # are processed as comments 
+#     E.G.:
+#     netcool-parameters
+#     #Parameter for sudo folder with sudoers file
+#     #INSTALL_PATH -- contails value of OMNIHOME variable
+#        USERNAME = "<USER>"
+#        PASSWORD = "<PASSWORD>"
+#        NCHOME = "<NCHOME>"
+#        INSTALL_PATH = "<OMNIHOME>"
+
+#
+#     Please Note: Any String value with non alphanumeric character should
+#                   be surrounded with double quotes. 
+#	<VALUE> -- should be replaced by YOUR values
+# 
+#file-informations
+#        type = "collector-configuration"
+#        collector = NetCoolV1
+#        file = config.template
+#        version = 1
+#        date = "2016/10/15"
+#        comment = "ConfigurAtion file to override NetCoolV1 collector parameters"
+#netcool-parameters
+#        USERNAME = "<USER>"
+#        PASSWORD = "<PASSWORD>"
+#        NCHOME = "<NCHOME>"
+#        INSTALL_PATH = "<OMNIHOME>"

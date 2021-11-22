@@ -1,0 +1,37 @@
+# version:1.0
+[string]
+drop role param=ALL EVENTS
+alter user param=ALL EVENTS
+Data of Policy Modification=20211004
+Policy Version=v4.0
+force password change=true
+uppercase letter=false
+drop user param=ALL EVENTS
+detailed error=false
+backup catalog delete=ALL EVENTS
+create role param=ALL EVENTS
+numerical digits=false
+global auditing state=true
+disable audit policy=ALL EVENTS
+connect param=UNSUCCESSFUL EVENTS
+create user param=ALL EVENTS
+default audit trail type=SYSLOG
+revoke any param=ALL EVENTS
+pswd lock system user=true
+special characters=false
+enable audit policy=ALL EVENTS
+system configuration change=ALL EVENTS
+grant any param=ALL EVENTS
+lowercase letter=false
+[integer]
+max pswd lifetime=90
+maximum invalid attempts=5
+last used pswd=8
+min pswd lifetime=1
+pswd expire warning time=14
+min pwd length=15
+max duration of inactivity=365
+max initial pswd lifetime=7
+pswd lock time=-1
+[string_list]
+Hana Predefined Users='_SYS_AFL','_SYS_EPM','_SYS_REPO','_SYS_SQL_ANALYZER','_SYS_STATISTICS','_SYS_TASK','_SYS_WORKLOAD_REPLAY','_SYS_XB','SYS','SYSTEM'

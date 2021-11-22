@@ -1,0 +1,230 @@
+---
+# **** Setting Socket tunnel ****
+- name: Role ensures that the socks tunnel is setup
+  hosts: localhost
+  connection: local
+  vars:
+    results_dir_base: "/tmp/gts-ansible/secscan"
+    acc_id: "{{ blueid_shortcode }}"
+    transaction_id: "{{ tower_job_id }}"
+    
+  roles:
+    - role: ansible-role-event-socks-tunnel
+
+- hosts: all
+  strategy: free
+  gather_facts: false
+
+  vars:
+    gcm_version: 540
+    gcm_home: "{{ ansible_env['ProgramFiles'] }}\\ansible\\GTS"
+    jre_home: "{{ gcm_home }}"
+    tools_home: "{{ gcm_home }}/tools"
+    policy_name: Weblogic-ITSSCSD_{{gcm_version}}
+    policy_home: "{{ gcm_home }}/__GCM/{{ policy_name }}"
+    vault_home: "{{policy_home}}/vault"
+    config_name: "weblogic_config.txt"
+    disable_os_detect: False
+    force_deploy: []
+    custom_files: []
+    supported_family: "{{ ansible_os_family == 'Windows'}}"
+    supported_version: "{{('2012' in ansible_os_name) or ('2016' in ansible_os_name) or ('2019' in ansible_os_name)}}"
+    win_version: "{% if 'Windows Server 2019' in ansible_distribution %}Win2019{% elif 'Windows Server 2016' in ansible_distribution %}Win2016{% else %}Win2012{% endif %}"
+    local_policy_path: ""
+    exclude_sections_path: ""
+    policy_parameter_path: ""
+    middleware_config_path: ""
+    account_code: "{{ blueid_shortcode }}"
+    trans_num: "{{ tower_job_id }}"
+    use_become_system: false
+
+  pre_tasks:
+    - setup:
+        gather_subset:
+         - '!all'
+    - name: Verify OS Family, Distro and Version
+      fail:
+        msg: "This Security Compliance Scan can NOT be run as {{ ansible_distribution }} {{ ansible_distribution_major_version }} is not supported."
+      when: ((supported_family|bool and not supported_version|bool) and not disable_os_detect|bool)
+
+  tasks:
+    - debug:
+        msg:
+          - " Project revision: {{ tower_project_revision }}"
+
+    - name: 'Print variable value'
+      debug: 
+        msg:
+          - "{{item}} : {{ lookup('vars',item) }}"
+      when:  vars[item] is defined
+      loop:
+        - force_deploy
+
+    - name: 'Set become system'
+      set_fact:
+        ansible_become: true
+        ansible_become_user: system
+        ansible_become_method: runas 
+      when: use_become_system == true
+
+    - name: Create GCM Directory Structure if NOT Exist
+      win_file:
+        path: "{{ item }}"
+        recurse: yes
+        state: directory
+      with_items:
+        - "{{ gcm_home }}"
+        - "{{ policy_home }}"
+        - "{{ vault_home }}"
+        - "{{ tools_home }}"
+      tags:
+      - configuration
+
+    - name: 'Step 2: Prepare endpoint'
+      block:
+        - name: 'Step 2: Get bds child ip'
+          include_role:
+            name: ansible-role-bds-get-child-ip
+
+        - name: 'Step 2: Prepare servers'
+          include_role:
+            name: ansible-role-gts-cm-prepare
+          vars:
+            prepare_list: [jre]
+
+    - name: 'Step 2: Check if JRE installed...'
+      win_command: '"{{ gcm_home }}/jre/bin/java.exe" -Xdump:none -Xms64m -Xmx128m -version'
+      args:
+        chdir: '{{ gcm_home }}/jre/bin'
+      failed_when: false
+      changed_when: false
+      register: java_version_command
+      tags:
+      - check
+
+    - name: Check if Local Policy Installed...
+      win_stat:
+        path: "{{ policy_home }}/localpolicy.xml"
+      register: lp_file_attr
+      tags:
+      - check
+
+    - name: Check if Exclude Sections Installed...
+      win_stat:
+        path: "{{ policy_home }}/exclude_sections.txt"
+      register: exclude_file_attr
+      tags:
+      - check
+
+    - name: Check if Policy Parameters Installed...
+      win_stat:
+        path: "{{ policy_home }}/policy_parameters.txt"
+      register: pp_file_attr
+      tags:
+      - check
+
+    - name: Check if Middleware Config Installed...
+      win_stat:
+        path: "{{ vault_home }}/{{config_name}}"
+      register: mw_file_attr
+      tags:
+      - check
+
+    - name: 'Check if tools Installed...'
+      win_stat:
+        path: "{{ gcm_home }}/tools/TIMcipherPswdV3.jar"
+      register: tools_file_attr
+      tags:
+      - check
+
+    - name: Check if Installation Required...
+      set_fact:
+        local_policy_install: "{{('Local_Policy' in force_deploy or 'all' in force_deploy) or ('Local_Policy' in custom_files or 'all' in custom_files) and not lp_file_attr.stat.exists }}"
+        exclude_sections_install: "{{('Exclude_Sections' in force_deploy or 'all' in force_deploy) or ('Exclude_Sections' in custom_files or 'all' in custom_files) and not exclude_file_attr.stat.exists }}"                
+        policy_parameters_install: "{{('Policy_Parameters' in force_deploy or 'all' in force_deploy) or ('Policy_Parameters' in custom_files or 'all' in custom_files) and not pp_file_attr.stat.exists }}"
+        middleware_config_install: "{{('Middleware_Configuration' in force_deploy or 'all' in force_deploy) or ('Middleware_Configuration' in custom_files or 'all' in custom_files) and not mw_file_attr.stat.exists }}"
+        tools_install: "{{ not tools_file_attr.stat.exists or 'tools' in force_deploy }}"
+        jre_install: "{{ java_version_command.rc == 0 or 'jre' in force_deploy }}"
+      tags:
+      - check
+
+    - debug:
+        msg:
+          - "Local Policy Install required    : {{ local_policy_install }}"
+          - "Exclude Sections install required : {{ exclude_sections_install }}"
+          - "Policy Parameters Install required: {{ policy_parameters_install }}"
+          - "Middleware Install required: {{ middleware_config_install }}"
+          - "Tools Install required       : {{ tools_install }}"
+          - "JRE Installed Status           : {{ jre_install }}"
+          - "OS Family: {{ win_version }}"
+
+    - name: 'Fail - Missing Requirements...'
+      fail:
+        msg: "Calibration Can NOT be Sent as JRE Status = {{ jre_install }}"
+      when: not jre_install
+      tags:
+      - configuration
+
+    - name: Copy Local Policy...
+      win_copy:
+        src: "{{local_policy_path}}"
+        dest: "{{ policy_home }}/localpolicy.xml"
+        force: yes
+      when: local_policy_install and not local_policy_path|length == 0
+      tags:
+      - install
+
+    - name: Copy Exclude Sections...
+      win_copy:
+        src: "{{exclude_sections_path}}"
+        dest: "{{ policy_home }}/exclude_sections.txt"
+        force: yes
+      when: exclude_sections_install and not exclude_sections_path|length == 0
+      tags:
+      - install
+
+    - name: Copy Policy Parameters...
+      win_copy:
+        src: "{{policy_parameter_path}}"
+        dest: "{{ policy_home }}/policy_parameters.txt"
+        force: yes
+      when: policy_parameters_install and not policy_parameter_path|length == 0
+      tags:
+      - install
+
+    - name: 'Copy Tools...'
+      win_copy:
+        src: "files/tools/TIMcipherPswdV3.jar"
+        dest: "{{ gcm_home }}/tools/TIMcipherPswdV3.jar"
+      when: tools_install and jre_install and middleware_config_install and not middleware_config_path|length == 0
+      tags:
+      - install
+
+    - name: Copy Middleware Config File...
+      win_template:
+        src: "{{middleware_config_path}}"
+        dest: "{{ vault_home }}/{{config_name}}"
+      when: middleware_config_install and not middleware_config_path|length == 0
+      tags:
+      - install
+
+    - name: 'Encrypt Middleware Config ...'
+      win_command: '"{{ gcm_home }}/jre/bin/java.exe" -Xdump:none -Xms128m -Xmx256m -jar "{{ gcm_home }}/tools/TIMcipherPswdV3.jar" "{{ vault_home }}/{{config_name}}"'
+      register: encrypt_exitcode
+      args:
+        chdir: "{{ policy_home }}"
+      when: jre_install and middleware_config_install and not middleware_config_path|length == 0
+      tags:
+      - run
+
+    - name: Remove Tools....
+      win_file:
+        path: "{{ tools_home }}/TIMcipherPswdV3.jar"
+        state: absent
+      when: tools_install and jre_install and middleware_config_install and not middleware_config_path|length == 0
+      tags:
+      - configuration
+
+    - name: Encription status...
+      debug: msg="Encryption Exit code {{encrypt_exitcode.rc}}"
+      when: jre_install and middleware_config_install and not middleware_config_path|length == 0

@@ -1,0 +1,7 @@
+# version:1.0
+[string]
+Data of Policy Modification=20211005
+Policy Version=v6.0
+[integer]
+Minimum password length=15
+Hist size=8

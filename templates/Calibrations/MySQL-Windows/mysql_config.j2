@@ -1,0 +1,66 @@
+# version:1.0
+# config.txt - 2019/07/30
+# Configuration File for win.any.mysql.MySQLV3 collector
+
+
+# ATTENTION!!!
+#   -It's not necessary to put values in double quotes
+#   -If you use specific characters in password they must be escaped according to the cmd.exe escape characters rules
+#	-If you want to use one configuration file for all hosts - please see the EXAMPLE_2. If no - see the EXAMPLE_1.
+
+
+# EXAMPLE_1. Separate config for each host
+
+##Define first server
+#mysql1
+#	instance = mysql4.1
+#	user = root
+#	password = root
+#	protocol=MEMORY
+#	shared-memory-base-name=TEST
+
+##Define second server
+#mysql2
+#	instance = MySQLs
+#	user = root
+#	password = root
+#	protocol=tcp
+#	port=3456	
+ 
+##Define third server
+#mysql3
+#	instance = mysqltest
+#	user = root
+#	password = root
+#	protocol=auto
+
+
+# EXAMPLE_2. One config file for all hosts
+# NOTE: The configuration properties for exact server should be defined in MANDATORY tags: start.hostname=HOSTNAME and end.hostname. There should be nothing between two separate host configuration blocks
+
+#start.hostname = HOSTNAME_1 
+##Define first server
+#mysql1
+#	instance = mysql4.1
+#	user = root
+#	password = root
+#	protocol=MEMORY
+#	shared-memory-base-name=TEST
+#end.hostname
+	 
+#start.hostname = HOSTNAME_2
+##Define first server
+#mysql1
+#	instance = MySQLs
+#	user = root
+#	password = root
+#	protocol=tcp
+#	port=3456	
+ 
+##Define second server
+#mysql2
+#	instance = mysqltest
+#	user = root
+#	password = root
+#	protocol=auto
+#end.hostname	

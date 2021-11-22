@@ -1,0 +1,52 @@
+# version:1.0
+[string]
+Date of Policy Modification=20201009
+Business Use Notice Text=%this%system%should%be%used%for%conducting%ibm%business%or%for%purposes%authorized%by%ibm%management%it%is%mandatory%to%comply%with%all%the%requirements%listed%in%the%applicable%security%policy%and%only%process%or%store%the%data%classes%approved%for%this%asset%type%%use%is%subject%to%audit%at%any%time%by%ibm%management%
+Priv Mon Remote Syslog Server IP=:none:
+AuthPrivLog file=/var/log/secure
+Internet Facing Server=yes
+Policy Version=7.0
+FTP Daemon Options=%-u %0477%
+AuthLog file=/var/log/messages
+allowed pwd algorithm=ssha512
+ntpd server=null
+[integer]
+HIPAA TMOUT=1800
+LOGIN RETRIES IBM Accounts=5
+Password histexpire Customer Accounts=105
+HIPAA autologout=30
+Password MIN OTHER IBM Accounts=1
+GDPR TMOUT=1800
+Password MAX AGE Customer Accounts=13
+Password mindiff Customer Accounts=4
+LOGIN RETRIES Customer Accounts=5
+Password histexpire IBM Accounts=105
+PCI TMOUT=900
+Password mindiff IBM Accounts=4
+Password MAX AGE IBM Accounts=13
+GDPR autologout=30
+Password MIN OTHER Customer Accounts=1
+Default TMOUT=21600
+Password MIN ALPHA IBM Accounts=1
+Default UMASK=077
+UIDLabelling=0
+Account Login Retries=5
+Default autologout=360
+PCI autologout=15
+Password MIN LENGTH IBM Accounts=15
+Password MIN ALPHA Customer Accounts=1
+Password MIN LENGTH Customer Accounts=15
+[string_list]
+Prohibited TCP Ports='67','19','13','9','21','23','7','70','15','11','6112','69'
+UserIDs Excluded Password='uucp','nobody','bin','daemon','adm','lp','sys','nuucp','lpd','imnadm','ipsec','ldap','snapp','invscout','pconsole','esaadmin','sshd'
+AllowdedOwners='adm','bin','daemon','imnadm','invscout','ipsec','ldap','lp','lpd','nuucp','root','snapp','sys','uucp','pconsole','esaadmin','srvproxy'
+Account Labelling Excluded Accounts=':none:'
+Invalid Password Expiring Groups='haemrm','imnadm','lp','mail','pconsole','printq','shutdown','snapp','sys','uucp','system','security','adm','audit','bin','cron','ecs','hacmp','ipsec','ldap'
+HIPAA Allowed Checksum tools='bos.rte.commands','openssl.base'
+AllowdedGroups='adm','audit','bin','cron','ecs','hacmp','haemrm','imnadm','ipsec','ldap','lp','mail','pconsole','printq','security','shutdown','snapp','sys','system','uucp'
+Prohibited RPC Process Names='cmsd','dtspcd','ttdbserver','rpc.ttdbserver','tftpd','rwho','rusersd','sprayd','pcnfsd','rexd','rwalld','rstatd'
+Prohibited UDP Ports='513','67','19','13','9','7','11','69'
+Password MAX Age Excluded Accounts='adm','bin','daemon','imnadm','invscout','ipsec','ldap','lp','lpd','nuucp','root','snapp','sys','uucp'
+Prohibited Process Names='pcnfsd','netstat','cmsd','dtspcd','tftpd','who','ftp','ttdbserver','npop','bootps','chargen','daytime','discard','echo','finger','systat','rwho','rstatd','rwalld','rusersd','sprayd','ftpd','telnet','telnetd'
+Prohibited INETD Process Names='rexd','bootps','chargen','daytime','ftp','ftpd','telnet','telnetd','systat','who','npop','talk','netstat','cmsd','dtspcd','ttdbserver','rstatd','rwalld','rusersd','sprayd','pcnfsd','tftp','tftpd','rwho','discard','echo','finger'
+User GECOS Regexp Exclude=':none:'

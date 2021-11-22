@@ -1,0 +1,21 @@
+# version:1.0
+[integer]
+HIPAA IDLE TIME OUT=1800
+IDLE TIME OUT=900
+Telnet Login Timeout=60
+Auth Attack Filter Reset Attempt Counter Atfer=300
+DoS Filter Reset Attempt Counter Atfer=60
+PCI AUDIT LOG RETENTION DAYS=365
+HIPAA AUDIT LOG RETENTION DAYS=270
+Auth Attack Filter Attempts=5
+GDPR AUDIT LOG RETENTION DAYS=180
+Telnet Reconnect Timeout=36000
+PCI IDLE TIME OUT=900
+AUDIT LOG RETENTION DAYS=180
+FBA AUDIT LOG RETENTION DAYS=180
+GDPR IDLE TIME OUT=1800
+DoS Filter Attempts=150
+Telnet Idle Timeout=14400
+[string]
+Data of Policy Modification=20200911
+Policy Version=v5.2A

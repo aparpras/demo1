@@ -1,0 +1,21 @@
+# version:1.0
+[string_list]
+AllowedAdhocJobsModules=''
+LogAggregatorLoggers='awx','activity_stream','job_events','system_tracking'
+[integer]
+PCIsessionCookieAge=900
+sessionCookieAge=1800
+sessionPerUser=1
+[float]
+accessTokenExpiration=31536000
+[boolean]
+nonCACForgAdminsCanSeeAllUsers=false
+orgAdminsCanSeeAllUsers=true
+nonCACFExternalUserCanCreateTokens=false
+ExternalUserCanCreateTokens=true
+orgAdminCanManageUsers=true
+ExternalLogging=true
+nonCACForgAdminCanManageUsers=false
+CACFDeployment=true
+[string]
+customLoginInfo=This system should be used for conducting IBM''s business or for purposes authorized by IBM management. It is mandatory to comply with all the requirements listed in the applicable security policy and only process or store the data classes approved for this asset type. Use is subject to audit at any time by IBM management.

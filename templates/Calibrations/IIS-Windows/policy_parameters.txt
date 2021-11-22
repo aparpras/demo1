@@ -1,0 +1,9 @@
+# version:1.0
+[string]
+Data of Policy Modification=20210630
+WWW Service Account name=%world%wide%web%publishing%service%
+IIS Logging Format={FF160663-DE82-11CF-BC0A-00AA006111E0}
+WWW Service Account security context=localsystem
+Policy Version=v2.0
+[integer]
+IUSR Password Expiration=90

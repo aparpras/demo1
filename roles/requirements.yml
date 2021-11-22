@@ -1,0 +1,15 @@
+---
+# global socks tunner role
+- name: ansible-role-event-socks-tunnel
+  src: git+https://github.kyndryl.net/Continuous-Engineering/ansible-role-event-socks-tunnel.git
+  version: origin/master
+
+# Global BDS Get Child IP role
+- name: ansible-role-bds-get-child-ip
+  src: git+https://github.kyndryl.net/Continuous-Engineering/ansible-role-bds-get-child-ip.git
+  version: origin/master
+
+# Global prepare role
+- name: ansible-role-gts-cm-prepare
+  src: git+https://github.kyndryl.net/Continuous-Engineering/ansible-role-gts-cm-prepare.git
+  version: origin/v5.2.0

@@ -1,0 +1,140 @@
+---
+# **** Setting Socket tunnel ****
+- name: Role ensures that the socks tunnel is setup
+  hosts: localhost
+  connection: local
+  vars:
+    results_dir_base: "/tmp/gts-ansible/secscan"
+    acc_id: "{{ blueid_shortcode }}"
+    transaction_id: "{{ tower_job_id }}"
+    
+  roles:
+    - role: ansible-role-event-socks-tunnel
+
+- hosts: all
+  strategy: free
+  gather_facts: false
+
+  vars:
+    gcm_version: 540
+    gcm_home: "{{ ansible_env['ProgramFiles'] }}\\ansible\\GTS"
+    policy_name: Websphere-Liberty-ITSSCSD_{{gcm_version}}
+    policy_home: "{{ gcm_home }}/__GCM/{{ policy_name }}"
+    disable_os_detect: false
+    force_deploy: []
+    custom_files: []
+    supported_family: "{{ ansible_os_family == 'Windows'}}"
+    supported_version: "{{('2012' in ansible_os_name) or ('2016' in ansible_os_name) or ('2019' in ansible_os_name)}}"
+    win_version: "{% if 'Windows Server 2019' in ansible_distribution %}Win2019{% elif 'Windows Server 2016' in ansible_distribution %}Win2016{% else %}Win2012{% endif %}"
+    local_policy_path: ""
+    exclude_sections_path: ""
+    policy_parameter_path: ""
+    account_code: "{{ blueid_shortcode }}"
+    trans_num: "{{ tower_job_id }}"
+    use_become_system: false
+
+  pre_tasks:
+    - setup:
+        gather_subset:
+         - '!all'
+    - name: Verify OS Family, Distro and Version
+      fail:
+        msg: "This Security Compliance Scan can NOT be run as {{ ansible_distribution }} {{ ansible_distribution_major_version }} is not supported."
+      when: ((supported_family|bool and not supported_version|bool) and not disable_os_detect|bool)
+
+  tasks:
+    - debug:
+        msg:
+          - " Project revision: {{ tower_project_revision }}"
+
+    - name: 'Print variable value'
+      debug: 
+        msg:
+          - "{{item}} : {{ lookup('vars',item) }}"
+      when:  vars[item] is defined
+      loop:
+        - force_deploy
+
+    - name: 'Set become system'
+      set_fact:
+        ansible_become: true
+        ansible_become_user: system
+        ansible_become_method: runas 
+      when: use_become_system == true
+
+    - name: Create GCM Directory Structure if NOT Exist
+      win_file:
+        path: "{{ item }}"
+        recurse: yes
+        state: directory
+      with_items:
+        - "{{ gcm_home }}"
+        - "{{ policy_home }}"
+      tags:
+      - configuration
+
+    - name: Check if Local Policy Installed...
+      win_stat:
+        path: "{{ policy_home }}/localpolicy.xml"
+      register: lp_file_attr
+      tags:
+      - check
+
+    - name: Check if Exclude Sections Installed...
+      win_stat:
+        path: "{{ policy_home }}/exclude_sections.txt"
+      register: exclude_file_attr
+      tags:
+      - check
+
+    - name: Check if Policy Parameters Installed...
+      win_stat:
+        path: "{{ policy_home }}/policy_parameters.txt"
+      register: pp_file_attr
+      tags:
+      - check
+
+    - name: Check if Installation Required...
+      set_fact:
+        local_policy_install: "{{('Local_Policy' in force_deploy or 'all' in force_deploy) or ('Local_Policy' in custom_files or 'all' in custom_files) and not lp_file_attr.stat.exists }}"
+        exclude_sections_install: "{{('Exclude_Sections' in force_deploy or 'all' in force_deploy) or ('Exclude_Sections' in custom_files or 'all' in custom_files) and not exclude_file_attr.stat.exists }}"        
+        policy_parameters_install: "{{('Policy_Parameters' in force_deploy or 'all' in force_deploy) or ('Policy_Parameters' in custom_files or 'all' in custom_files) and not pp_file_attr.stat.exists }}"
+      tags:
+      - check
+
+    - debug:
+        msg:
+          - "Local Policy install required    : {{ local_policy_install }}"
+          - "Exclude Sections install required : {{ exclude_sections_install }}"
+          - "Policy Parameters install required: {{ policy_parameters_install }}"
+          - "OS Family: {{ win_version }}"
+
+    - name: Copy Local Policy...
+      win_copy:
+        src: "{{local_policy_path}}"
+        dest: "{{ policy_home }}/localpolicy.xml"
+        force: yes
+      when: local_policy_install and not local_policy_path|length == 0
+      tags:
+      - install
+
+    - name: Copy Exclude Sections...
+      win_copy:
+        src: "{{exclude_sections_path}}"
+        dest: "{{ policy_home }}/exclude_sections.txt"
+        force: yes
+      when: exclude_sections_install and not exclude_sections_path|length == 0
+      tags:
+      - install
+
+    - name: Copy Policy Parameters...
+      win_copy:
+        src: "{{policy_parameter_path}}"
+        dest: "{{ policy_home }}/policy_parameters.txt"
+        force: yes
+      when: policy_parameters_install and not policy_parameter_path|length == 0
+      tags:
+      - install
+
+  post_tasks:
+    - debug: msg="All Complete"

@@ -1,0 +1,12 @@
+# version:1.0
+[string_list]
+Solaris Privileged Groups='mail','smmsp','root','adm','bin','cimsrvr','daemon','ftp','gdm','imnadm','lp','mysql','netadm','nuucp','openldap','pkg5srv','postgres','slocate','sms','sys','sysadmin','tty','upnp','uucp','webservd','xvm'
+Solaris directories='/platform','/sbin','/usr/sbin','/usr/bin','/var/log','/var/adm','/bin','/etc','/kernel','/lib','/tmp'
+Linux directories='/etc','/var','/usr','/var/log','/var/tmp','/','/tmp'
+AIX Privileged Groups='system','uucp','adm','audit','bin','cron','ecs','hacmp','haemrm','imnadm','ipsec','ldap','Ip','mail','pconsole','printq','security','shutdown','snapp','sys'
+AIX directories='/usr/sbin','/usr/etc','/usr','/usr/share','/var/adm','/usr/share/dict','/etc/locks','/etc/security','/','/etc','/bin','/usr/bin','/tmp','/var/tmp','/var'
+Builtin Commands='sudoedit'
+HPUX Privileged Groups='adm','bin','cimsrvr','daemon','imnadm','lp','mail','nogroup','nuucp','root','sys','tty'
+[string]
+Data of Policy Modification=20211013
+Policy Version=CSDv7.0

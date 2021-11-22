@@ -1,0 +1,35 @@
+# version:1.0
+# # config.txt - 2011/02/16
+# # Configuration File for unix.multi.tsm.TsmServerV4 collector
+
+# # Define TSM server authorization parameters
+# #
+# # user          - the user ID with TSM Administrator rights
+# # password      - its password
+# # ad-tcpip-address - IP Address and port
+# # INSTALL_PATH - path to TSM server instance. Parameter is optional
+# # If parameter INSTALL_PATH is missing collector will not gather file permissions information. 
+# # the parameter multiinstance values should be listed with the "," delimiter 
+# # ad-isc-installed  - Integrated Solutions Console is installed or not (the default - NO)
+# # ad-inv-logon-days - the number of days (from today) during of which to check invalid logons (the default - 30)
+
+# #authorization-parameters
+# #	ad-tcpip-address = "172.16.3.244:1550, 172.16.2.162:1552"
+# #	ad-instance-path = "/home/tsminst1/tsminst1,/home/tsminst1/tsminst1"
+# #	user = admin1,admin2
+# #	password = admin1,admin2
+# #	ad-isc-installed = NO, YES
+# #	ad-inv-logon-days = 30
+
+# [config1]	
+	# user = admin1
+	# password = admin1
+	# ad-tcpip-address = "172.16.3.244:1500"
+	# INSTALL_PATH = "/home/tsminst1/tsminst1"
+	# ad-inv-logon-days = 30
+	# ad-isc-installed = NO
+
+# [config2]
+	# user = admin2
+	# password = admin2
+	# ad-tcpip-address = "172.16.2.162:1501"

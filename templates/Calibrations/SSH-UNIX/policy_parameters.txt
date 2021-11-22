@@ -1,0 +1,21 @@
+# version:1.0
+[integer]
+LoginGraceTime=120
+Key Regeneration Interval=3600
+ServerKeyBits=2048
+MaxStartups=100
+Public key length=1024
+ECDSAKeyLength=256
+RSAKeyLength=2048
+MaxAuthTries=5
+[string_list]
+SOLARISAllowdedGroups='adm','bin','cimsrvr','daemon','ftp','gdm','imnadm','lp','mail','mlocate','mysql','netadm','noaccess','nobody','nuucp','openldap','other','pkg5srv','postgres','root','slocate','smmsp','sms','staff','sys','sysadmin','tty','upnp','uucp','webservd','xvm'
+AIXAllowdedGroups='adm','audit','bin','cron','ecs','hacmp','haemrm','imnadm','ipsec','ldap','lp','mail','pconsole','printq','security','shutdown','snapp','sys','system','uucp'
+SOLARISAllowdedOwners='adm','aiuser','bin','daemon','dhcpserv','dladm','ftp','gdm','ikeuser','imnadm','listen','lp','mysql','netadm','netcfg','noaccess','nuucp','openldap','pkg5srv','postgres','root','smmsp','sms-svc','svctag','sys','upnp','uucp','webservd','xvm','zfssnap'
+AIXAllowdedOwners='adm','bin','daemon','imnadm','invscout','ipsec','ldap','lp','lpd','nuucp','root','snapp','sys','uucp','pconsole','esaadmin','srvproxy'
+[string]
+Data of Policy Modification=20210531
+Policy Version=v5.2
+[boolean]
+IdentificationMechanismUsed=false
+AllowProtocolOne=false

@@ -1,0 +1,78 @@
+# version:1.0
+# Version: TJACX.SCM.V.5.1
+# 
+# lines starting with the hash character are comments
+# 
+# this file contains the IP addresses, usernames and passwords
+# for connecting to network devices
+#Specified password,enablePwd and jumppassword should not contain any symbols not used in password(for example surrounding quotas)
+# 
+
+# type - has to be "ios-machins-group" for ios devices declared in a group, or "ios-machine" for a single declared device
+#
+# mode - has to be set for devices, to know how to login to the device.
+#        mode = 0, No username is sent to the device. Only password and and enable password is used.
+#        mode = 1, Username and password and enable password is needed to login to the device.
+#        mode = 2, Only username and password is used to login to the device.
+#
+#        Most devices will use mode = 1
+#
+#Configuration file
+
+#file-informations
+#	type = collector-configuration
+#	file = "c:\config.txt"
+#	version = 1
+#	date = "Fri Aug 28 12:10:26 CEST 2006"
+#	comment = "Converted with configconvert"
+
+# Example of Having devices in a group, where all
+# parameters are defined for every device in the group	
+#------------------------------------------------------
+#
+#cisco-ios-devices
+#	type = ios-machines-group
+#	machines = ip=10.1.1.1,
+#	mode=1,
+#	user=testuser, 
+#	password=testpass, 
+#	enablepassword=testenable, 
+#	protocol=ssh2, 
+#	port=22
+
+#	machines = ip=10.1.1.2,
+# 	mode=0, 
+#	user=notneeded, 
+#	password=testpass, 
+#	enablepassword=testenable, 
+#	protocol=telnet, 
+#	port=23
+
+# Example of single defined device
+#----------------------------------
+
+
+
+# Example of a parameter block
+#------------------------------
+#telnet-parameters
+#	mode = 1
+#	protocol = telnet
+#	port = 23
+#	user = test2
+#	password = testpass2
+#	timeout = 200000
+#	enablepassword = Jodude1  
+#cisco-single2
+#	use telnet-parameters
+#	type = ios-machine
+#	ip = 10.1.1.4  
+#cisco-group2
+#   use telnet-parameters
+#	type = ios-machines-group
+#	machines = ip=10.1.1.5,
+
+#	protocol=ssh2, 
+#	port=22
+#	machines = ip=10.1.1.6,
+#	mode=0  		

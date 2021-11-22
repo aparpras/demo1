@@ -1,0 +1,35 @@
+# # config.txt - 2010/10/20
+# # Configuration File for win.any.tsm.TsmServerV2 collector
+
+# # Define TSM server authorization parameters
+# #
+# # user - the user ID with TSM Administrator rights. Mandatory parameter
+# # password      - its password. Mandatory parameter. Empty parameter should be set as "" or '' (pair of quotes).
+# # ad-tcpip-address – TCP server address and port. Mandatory parameter.
+# # INSTALL_PATH - the TSM instance directory (i.e. "C:\Program Files\Tivoli\TSM\server1"). Optional parameter. When it is not set file permissions is not gathered.
+# # ad-dsmadmc-path  - the directory where "dsmadmc" utility and its stuff resides. Optional parameter. When it is not set the path is to dsmadmc utility is retrieved from Windows registry by key "HKEY_LOCAL_MACHINE\SOFTWARE\IBM\ADSM\ CurrentVersion\Path" and "tsmdiag\dsmadmc.exe" string is appended.
+# # ad-isc-installed - Integrated Solutions Console is installed or not (the deafult - no). Optional parameter.
+# # ad-inv-logon-days- the number of days (from today) during of which to check invalid logons (the default - 30). Optional parameter.
+
+# #authorization-parameters
+# #	user = admin, admin
+# #	password = admin,admin
+# #	ad-tcpip-address = "127.0.0.1:1500, 127.0.0.1:1502"
+# #	INSTALL_PATH = "c:\program files\tivoli\tsm\server1,c:\program files\tivoli\tsm\server2"
+# #	ad-dsmadmc-path = "c:\program files\tivoli\tsm\server\tsmdiag"
+# #	ad-inv-logon-days = 30
+# #	ad-isc-installed = NO
+
+# [config1]		
+	# user = admin
+	# password = admin
+	# ad-tcpip-address = "127.0.0.1:1500"
+	# INSTALL_PATH = "c:\program files\tivoli\tsm\server1"
+	# ad-dsmadmc-path = "c:\program files\tivoli\tsm\server\tsmdiag"
+	# ad-inv-logon-days = 30
+	# ad-isc-installed = NO
+
+# [config2]
+	# user = admin
+	# password = ""
+	# ad-tcpip-address = "127.0.0.1:1502"

@@ -1,0 +1,25 @@
+# version:1.0
+[string]
+ssl GDPR=on
+ident authentication=0
+logging collector=on
+log file permissions=0640
+streaming replication=off
+timestamp format=%|%Y-|%m-|%d_|%H|%M|%S%
+ssl HIPAA=on
+Policy Version=ITSSCSDv1.0
+log truncate on rotation=off
+log connections=on
+password authentication=0
+create privilege for public=f
+trust authentication=0
+peer authentication=0
+log disconnections=on
+log line prefix=%|%m [|%p]%
+unix socet permissions template=0__0
+unix socet permissions=0770
+superuser in streaming replication=0
+[string_list]
+log statement='ddl','mod','all'
+min message log error levels='DEBUG5','DEBUG4','DEBUG3','DEBUG2','DEBUG1','INFO','NOTICE','WARNING','ERROR'
+min message log levels='DEBUG5','DEBUG4','DEBUG3','DEBUG2','DEBUG1','INFO','NOTICE','WARNING'

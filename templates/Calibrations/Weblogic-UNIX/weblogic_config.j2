@@ -1,0 +1,26 @@
+# version:1.0
+# weblogic_config.txt - 2019/02/07
+# Configuration file for unix.any.weblogic.WeblogicV1 collector
+#
+#______________________________________IMPORTANT______________________________________
+# 1.You don't need to put parameters in quotes, it's not necessary
+# 2.If you use special characters in password on Windows, you need to escape them
+# according to cmd.exe escape characters rules
+#_____________________________________________________________________________________
+#
+#
+# Parameters
+#weblogic1
+#	DOMAIN_HOME = /opt/WLS/domains
+#	WL_PREFIX = /opt/WLS/
+#	FILES = 4:?/domain/security-configuration/realm/*[name()="sec:key-store"]/*[name()="sec:root-ca-key-store-location"]/text()
+#	CONFIG_XML = 1:/domain/server/ssl/enabled/text(), 2:/Domain/Server/SLL/@Enabled, 3:/domain/log/file-count/text(), 4:/domain/log/file-time-span/text(), 5:/domain/log/rotation-type/text(), 6:/domain/library/name/text() 
+#	CONDITIONS = conditions
+#	LIMIT = 20000
+#	DIR_LINKS = 1
+#	FILE_LINKS = 1
+#	IP = t3://localhost:7001
+#	USER = user
+#	PASSWORD = password_
+#	WLST_PASS = /opt/WLS/10.3.6/wlserver_10.3/common/bin/wlst.sh
+#	APP_DEPLOY_DIR = /opt/WLS/apps

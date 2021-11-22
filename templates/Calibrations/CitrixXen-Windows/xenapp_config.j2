@@ -1,0 +1,35 @@
+# version:1.0
+# ===========================================================================
+# Licensed Materials - Property of IBM
+#
+# (C) Copyright IBM Corp. 2017 All Rights Reserved.
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+# ===========================================================================
+# Use this file to override win.any.XenAppV1 collector parameters.
+# Collector parameters must be specified in the Citrix1 section:
+#     Lines starting with # are processed as comments
+#     E.G.:
+#     Citrix1
+#     USER = Administrator
+#     PASSWORD = "p@ssw0rd"
+#     DOMAIN = domain
+#
+#     Please Note: Specified parameters are used in following command
+#cmd.exe /C runAsAccountV1.exe -user <USERNAME> -password <PASSWORD> -hostname <DOMAIN> -command <PATH_TO_BAT>
+#all specific characters should be escaped accordingly to keep command executable via command line
+
+#
+#
+# Mandatory Parameters for this collector:
+# ---------------------------------------
+#	USER = System user with Citrix admin rights. For expl: Administrator
+#	PASSWORD = this user's password. For expl: "Adm12345"
+#	DOMAIN = domain which contain's specified user.
+#	<VALUE> -- should be replaced by YOUR values
+#
+#Citrix1
+#	USER = <VALUE>
+#	PASSWORD = <VALUE>
+#	DOMAIN = <VALUE>

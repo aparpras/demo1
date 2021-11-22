@@ -1,0 +1,10 @@
+# version:1.0
+[integer]
+Password MIN Age New=0
+Password MIN OTHER=2
+Password Max Age=13
+Password Hist Size New=8
+Account Login Retries=5
+Password MIN LENGTH=15
+[string]
+Business Use Notice Text=%ibm%internal%system%must%only%be%used%for%conducting%ibm%business%for%purposes%auth%by%ibm%management%

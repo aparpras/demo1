@@ -1,0 +1,7 @@
+# version:1.0
+[string]
+Data of Policy Modification=20211011
+EXCLUDE DB ALIAS=TRUE
+Policy Version=v6.2
+[integer]
+UMASK VALUE=22

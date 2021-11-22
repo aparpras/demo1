@@ -1,0 +1,4 @@
+# version:1.0
+[string]
+Data of Policy Modification=20210623
+Policy Version=ITSSCSDv4.0

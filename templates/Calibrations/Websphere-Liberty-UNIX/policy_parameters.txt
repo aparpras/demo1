@@ -1,0 +1,4 @@
+# version:1.0
+[string]
+Data of Policy Modification=2021/09/14
+Policy Version=V1.3

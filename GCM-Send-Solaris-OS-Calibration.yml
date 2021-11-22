@@ -1,0 +1,156 @@
+---
+- hosts: all
+  strategy: free
+  become: true
+  become_user: root
+  gather_facts: false
+
+  vars:
+    gcm_version: 540
+    gcm_home: "/var/opt/ansible/GTS"
+    policy_name: Solaris-ITSSCSD_{{gcm_version}}
+    policy_home: "{{ gcm_home }}/__GCM/{{ policy_name }}"
+    vault_home: "{{policy_home}}/vault"
+    config_name: "openssh_config.txt"
+    disable_os_detect: false
+    force_deploy: []
+    custom_files: []
+    supported_distro: "{{(('Solaris' in ansible_distribution) and (ansible_distribution_major_version | int >= 11))}}"
+    local_policy_path: ""
+    exclude_sections_path: ""
+    policy_parameter_path: ""
+    middleware_config_path: ""
+
+  pre_tasks:
+    - setup:
+        gather_subset:
+         - '!all'
+    - name: Verify OS Family, Distro and Version
+      fail:
+        msg: "This Security Compliance Scan can NOT be run as {{ ansible_distribution }} {{ ansible_distribution_major_version }} is not supported."
+      when: ((not supported_distro|bool) and not disable_os_detect|bool)
+      
+    - name: Set defaults that can be overriden per host
+      set_fact:
+        gcm_files_owner: "{{ gcm_files_owner | default('root') }}"
+        gcm_files_group: "{{ gcm_files_group | default('system' if ansible_system == 'AIX' else 'root') }}"
+        gcm_files_mode: "{{ gcm_files_mode | default('700') }}"
+
+  tasks:
+    - debug:
+        msg:
+          - " Project revision: {{ tower_project_revision }}"
+
+    - name: 'Print variable value'
+      debug: 
+        msg:
+          - "{{item}} : {{ lookup('vars',item) }}"
+      when:  vars[item] is defined
+      loop:
+        - force_deploy
+          
+    - name: Create GCM Directory Structure if NOT Exist
+      file:
+        path: "{{ item }}"
+        owner: "{{ gcm_files_owner }}"
+        group: "{{ gcm_files_group }}"
+        mode: "{{ gcm_files_mode }}"
+        recurse: yes
+        state: directory
+      with_items:
+        - "{{ gcm_home }}"
+        - "{{ policy_home }}"
+        - "{{vault_home}}"
+      tags:
+      - configuration
+
+    - name: Check if Local Policy Installed...
+      stat:
+        path: "{{ policy_home }}/localpolicy.xml"
+      register: lp_file_attr
+      tags:
+      - check
+
+    - name: Check if Exclude Sections Installed...
+      stat:
+        path: "{{ policy_home }}/exclude_sections.txt"
+      register: exclude_file_attr
+      tags:
+      - check
+
+    - name: Check if Policy Parameters Installed...
+      stat:
+        path: "{{ policy_home }}/policy_parameters.txt"
+      register: pp_file_attr
+      tags:
+      - check
+
+    - name: Check if Middleware Config Installed...
+      stat:
+        path: "{{ vault_home }}/{{config_name}}"
+      register: mw_file_attr
+      tags:
+      - check
+
+    - name: Check if Installation Required...
+      set_fact:
+         local_policy_install: "{{('Local_Policy' in force_deploy or 'all' in force_deploy) or ('Local_Policy' in custom_files or 'all' in custom_files) and not lp_file_attr.stat.exists }}"
+         exclude_sections_install: "{{('Exclude_Sections' in force_deploy or 'all' in force_deploy) or ('Exclude_Sections' in custom_files or 'all' in custom_files) and not exclude_file_attr.stat.exists }}"
+         policy_parameters_install: "{{('Policy_Parameters' in force_deploy or 'all' in force_deploy) or ('Policy_Parameters' in custom_files or 'all' in custom_files) and not pp_file_attr.stat.exists }}"
+         middleware_config_install: "{{('Middleware_Configuration' in force_deploy or 'all' in force_deploy) or ('Middleware_Configuration' in custom_files or 'all' in custom_files) and not mw_file_attr.stat.exists }}"
+      tags:
+      - check
+
+    - debug:
+        msg:
+          - "Local Policy install required    : {{ local_policy_install }}"
+          - "Exclude Sections install required : {{ exclude_sections_install }}"
+          - "Policy Parameters install required: {{ policy_parameters_install }}"
+          - "Middleware install required: {{ middleware_config_install }}"
+
+    - name: Copy Local Policy...
+      copy:
+        src: "{{local_policy_path}}"
+        dest: "{{ policy_home }}/localpolicy.xml"
+        owner: "{{ gcm_files_owner }}"
+        group: "{{ gcm_files_group }}"
+        mode: "{{ gcm_files_mode }}"
+      when: local_policy_install and not local_policy_path|length == 0
+      tags:
+      - install
+
+    - name: Copy Exclude Sections...
+      copy:
+        src: "{{exclude_sections_path}}"
+        dest: "{{ policy_home }}/exclude_sections.txt"
+        owner: "{{ gcm_files_owner }}"
+        group: "{{ gcm_files_group }}"
+        mode: "{{ gcm_files_mode }}"
+      when: exclude_sections_install and not exclude_sections_path|length == 0
+      tags:
+      - install
+
+    - name: Copy Policy Parameters...
+      copy:
+        src: "{{policy_parameter_path}}"
+        dest: "{{ policy_home }}/policy_parameters.txt"
+        owner: "{{ gcm_files_owner }}"
+        group: "{{ gcm_files_group }}"
+        mode: "{{ gcm_files_mode }}"
+      when: policy_parameters_install and not policy_parameter_path|length == 0
+      tags:
+      - install
+
+    - name: Copy Middleware Config File...
+      template:
+        src: "{{middleware_config_path}}"
+        dest: "{{ vault_home }}/{{config_name}}"
+        owner: "{{ gcm_files_owner }}"
+        group: "{{ gcm_files_group }}"
+        mode: "{{ gcm_files_mode }}"
+      when: middleware_config_install and not middleware_config_path|length == 0
+      tags:
+      - install
+
+  post_tasks:
+    - debug: msg="All Complete"

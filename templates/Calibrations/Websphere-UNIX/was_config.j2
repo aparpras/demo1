@@ -1,0 +1,107 @@
+# version:1.0
+# config.txt - 2011/05/30
+# Configuration File for unix.multi.was.WAServerV3 collector
+
+# Define WAS server authorization parameters
+# ATTENTION: when non alphanumeric characters are met in a parameter value, the value should be 
+#            		taken in double quotes. 
+#
+# MULIINSTANCE SUPPORT
+#
+# There are 2 section types for the multiinstance support: "default" and "instX", where X - a sequential number of the instance in this config file. 
+# If you have just one instance to check then "default" section MUST NOT be used. Only "inst1" section must exist with parameters specified.
+# If there are two or more instances then "default" MAY be included in config file. This section is OPTIONAL.
+# The "default" section contains common parameters for all "instX" sections. But you may set all parameters separately in instX sections.
+# The "instX" section (where X - a sequential number) contains parameters specific for the instance. This section is REQUIRED. 
+# Parameter value found in instX section overrides the value set for the same parameter in the "default" section (if it is present). 
+#
+# ATTENTION!
+# Values that are set below for parameters are just samples and must be replaced with actual ones.
+#
+# ATTENTION!
+# It's not necessary to put values in double quotes
+#
+# PARAMETERS
+#
+# user				- the Server ID the wsadmin script runs with.
+#				  	If the WAS server Securiy is not ON, you can keep it empty or put the empty string "".
+#					
+# password   		- its password
+#				  	If the WAS server Securiy is not ON, you can keep it empty or put the empty string "". 
+#
+# ATTENTION: ad-server-id and ad-password are DEPRICATED and will work some time for compatibility.
+#
+# ATTENTION: If the WAS server Security is On, the "user"("ad-server-id") and "password"("ad-password") parameters can be skipped in case    
+#				when those parameters are specified in the server's soap.client.props file.
+#
+# ad-soap-port			- the SOAP connector port (The default SOAP port for a single-server installation is 8880).
+#				  The parameter is mandatory. 			  
+# INSTALL_PATH		- WAS installation path 
+#				ATTENTION. 
+#				For the WAS version 6.x this path should look like this:
+#				 The parameter is mandatory.
+# ad-was-home			- WAS profile path 
+#				ATTENTION. 
+#				The parameter should be specified in the case when the profile is situated
+#				not in the WAS installation path.
+#				The parameter is optional.
+# ad-gsk7kit-java-pth		- the Java installation path for gsk7cmd running
+#				  for example: /usr/java14
+#				Hint: Please, check - "gsk7cmd" command should start from any directory. If not, then leave that parameter empty.
+#				the parameter is optional.
+# ad-password-key-file		- the password of the key file (for the dummy key file - WebAS). The parameter is optional.
+# ad-password-trs-file		- the password of the trust file (for the dummy trust file - WebAS). The parameter is optional.
+# ad-installpath-allfiles-check - to check or not all files permissions in the was INSTALLROOT path - "yes" or "no". 
+#				ATENTION. By default even if nothing is specified for this parameter, 
+#				the collector interprets it as "yes".
+# ad-httpd-conf-path		- FOR LINUX OS only. 
+#				the actual httpd.conf files path.
+#				On the AIX system those files are being found automatically by "ps_ihs.sh" script.
+#				The parameter is optional.
+# ad-was-host			- optional parameter. The name of the WAS deployment manager host.
+# ad-ssl-alias			- optional parameter.This parameter indicate the used SSL configuration. 
+#						  This is a synthetic way for the user to specify which SSL Key File and Trust File are currently used by the WAS server.
+# WAS_ADMIN_GROUPS		- OPTIONAL parameter. Comma separated user group names of users who are WAS instance admins.
+#						  This parameter was introduced to capture valid user groups who could own WAS file-system files.
+# The "authorization-parameters" tag is obligatory
+#authorization-parameters		
+#	default
+#	        ad-gsk7kit-java-pth = "/usr/java14"
+#	        ad-password-key-file = WebAS
+#	        ad-password-trs-file = WebAS
+#	        ad-installpath-allfiles-check = no
+
+#	inst1
+#	        ad-server-id = was1
+#	        ad-password = adpsw1
+#			ad-soap-port = 8880
+#	        INSTALL_PATH = "/home/WebSphere/AppServer1/profiles/Dmgr01"
+#			ad-password-key-file = apswkf1
+#			ad-password-trs-file = apswtf1
+#			WAS_ADMIN_GROUPS = group1,group2,group3
+	
+#	inst2
+#	        ad-server-id = was2
+#	        ad-password = adpsw2	        
+#			ad-soap-port = 8881
+#	        INSTALL_PATH = "/home/WebSphere/AppServer1/profiles/AppSrv01"
+#			ad-httpd-conf-path = "/usr/IBMIHS/conf/httpd.conf"
+#	        ad-was-host = "somehost"
+#			WAS_ADMIN_GROUPS = group3,group4,group5
+
+# Define files to check permissions (this section is OPTIONAL)
+# Use tag "files-to-check" to define this section
+# Under this tag should be a list of files, separated by new line 
+# AdminScript - is used for files, which are admin tool scripts
+# InstallRoot - is used for files from <Install_Root> directory
+# Security - is used for path to security.xml
+# files-to-check
+#	AdminScript = /bin/wsadmin.bat 
+#	Security = /config/cells/
+
+# Define files with encrypted passwords(this section is OPTIONAL)
+# Use tag "files-with-ecnrypted-passwords" to define this section
+# Under this tag should be a list of files, separated by new line, to check not encrypted passwords
+# files-with-ecnrypted-passwords
+#	file = /properties/sas.client.props
+#	file = /properties/soap.client.props

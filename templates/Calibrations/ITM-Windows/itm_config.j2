@@ -1,0 +1,30 @@
+# version:1.0
+# config.txt - 2008/06/30
+# Configuration File for win.any.itm.ITMV2 collector
+
+# File metadata
+#
+#file-information
+#	type = collector-configuration
+#	collector = ITM
+#	file = config.txt
+#	version = 1
+#	date = "2015/06/30"
+#	comment = "Configuration File for win.any.itm.ITMV2 collector"
+
+# Define TSM server authorization parameters
+#
+# If TEPS is installed, then the next 2 parameters should be filled: 
+# user	- the user ID with according access rights to login to TEPS (f.e. "sysadmin").
+# password   	- its password
+#
+#
+# IMPORTANT note on how to set password in configuration file:
+#
+# We use password as an agrument to "tacmd" command. If password was set but collector fails to execute "tacmd",
+# please check wheather password contains any cmd.exe special characters. If special characters are in use, 
+# escape them according to the cmd.exe escaping rules.
+
+#authorization-parameters		
+#	user = 
+#	password = 

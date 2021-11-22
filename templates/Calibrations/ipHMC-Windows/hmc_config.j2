@@ -1,0 +1,39 @@
+# version:1.0
+#Configuration file
+
+
+#hmc-devices
+#	type = hmc-machines-group
+#	machines = ip=10.1.1.1, user=testuser, password=testpass, protocol=ssh2, port=22, ssh-key-path="/root/.ssh/gcm_ssh_id1"
+#	machines = ip=10.1.1.2, user=user1, password=testpass, protocol=telnet, port=23, ssh-key-path="/root/.ssh/gcm_ssh_id1"
+# Example of single defined device
+#----------------------------------
+
+#hmc-machine1
+#  type = hmc-machine
+#  ip = 10.1.1.3
+#  user = testuser
+#  password = testpass
+#  protocol = ssh2
+#  port = 22 
+#  ssh-key-path = "/root/.ssh/gcm_ssh_id1"
+#  timeout = 15000
+
+# Example of a parameter block
+#------------------------------
+#telnet-parameters
+#	protocol = telnet
+#	port = 23
+#	user = test2
+#	password = testpass2  
+
+#hmc-single2
+#	use telnet-parameters
+#	type = hmc-machine
+#	ip = 10.1.1.4
+ 
+#hmc-group2
+#   use telnet-parameters
+#	type = hmc-machines-group
+#	machines = ip=10.1.1.5, protocol=ssh2, port=22
+#	machines = ip=10.1.1.6 

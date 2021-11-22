@@ -1,0 +1,6 @@
+# version:1.0
+[string]
+Data of Policy Modification=20211027
+Policy Version=v6.1
+[string_list]
+Privileged Users='administrators','administrator','domain admins','enterprise admins','enterprise administrators','domain administrators','local service','network service','creator owner','system'

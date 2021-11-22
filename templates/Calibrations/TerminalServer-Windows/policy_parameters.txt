@@ -1,0 +1,7 @@
+# version:1.0
+[string]
+Data of Policy Modification=20210402
+Policy Version=v4.0
+[integer]
+PCI Idle Session Limit=15
+Idle Session Limit=30

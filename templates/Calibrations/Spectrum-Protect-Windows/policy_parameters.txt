@@ -1,0 +1,7 @@
+# version:1.0
+[string]
+Data of Policy Modification=20211013
+Policy Version=v7.0
+[string_list]
+Privileged Users='system','administrator','managesrv','creator owner'
+Privileged Groups='network service','enterprise admins','creator owner','administrators','domain admins','enterprise administrators','enterprise operators','domain administrators','system','local service','power users'

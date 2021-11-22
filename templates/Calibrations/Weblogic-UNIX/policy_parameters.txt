@@ -1,0 +1,11 @@
+# version:1.0
+[string]
+Data of Policy Modification=20210603
+Policy Version=v6.1
+[integer]
+HIPAA TMOUT=1800
+Password Complexity=2
+Password Length=15
+Default TMOUT=3600
+PCI TMOUT=900
+GDPR TMOUT=1800

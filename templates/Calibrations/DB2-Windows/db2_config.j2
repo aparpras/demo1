@@ -1,0 +1,50 @@
+# version:1.0
+# # config.txt - 2018/04/04
+# # Configuration File for 
+# #   DB2 collectors (WIN)
+# # File metadata
+# #
+# file-information
+  # type = collector-configuration
+  # collector = DB2V5
+  # file = db2_config.txt
+  # version = 1
+  # date = "2018/04/04"
+  # comment = "Configuration File for DB2 collectors (WIN)"
+   
+# #for win.any.db2.DB2DbAuditV5  
+# # user - User, under which the command should be executed.
+# # password - Password for the user. Please don't set password in quotes!
+# # hostname - Hostname from which the user is coming.
+       
+# auth-information
+  # type = auth-info
+  # user = db2admin
+  # password = 12345
+  # domainname = domainname
+   
+# #for win.any.db2.DB2DbAuthV4
+# # Define User and Group accounts
+# accounts-parameters
+  # type = authparm
+  # user-name = user1
+  # user-name = user2
+  # user-name = user3
+  # group-name = group1
+  # group-name = group2
+  # auth-type = DBADMAUTH
+  # auth-type = CREATETABAUTH
+  # auth-type = CONNECTAUTH
+
+
+# #for win.any.db2.DB2DbInstanceConfigV4
+# inst-conf
+  # type = confparm 
+  # config-param-name = DIR
+  # config-param-name = VERSION
+
+# #for win.any.db2.DB2BkupDirPermsV4, win.any.db2.DB2DbDirPermsV4, win.any.db2.DB2LogDirPermsV4
+# unix-owner
+  # type = ownerparm
+  # owner-name = 
+  # owner-group =

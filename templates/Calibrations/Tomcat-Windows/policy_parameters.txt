@@ -1,0 +1,12 @@
+# version:1.0
+[string]
+Data of Policy Modification=20211013
+Policy Version=v6.0
+[integer]
+Log retention FBA=180
+Log retention GDPR=0
+Log retention HIPAA=270
+Session timeout PCI=15
+Log retention=180
+Log retention PCI=360
+Session timeout=30

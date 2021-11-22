@@ -1,0 +1,62 @@
+# config.txt - 2019/07/30
+# Configuration File for unix.any.mysql.MySQLConfigV3 collector
+
+
+# ATTENTION!!!
+#   -It's not necessary to put values in double quotes
+#	-If you want to use one configuration file for all hosts - please see the EXAMPLE_2. If no - see the EXAMPLE_1.
+
+
+# EXAMPLE_1. Separate config for each host
+
+##Define the first server
+#mysql1
+#	user=root
+#	password=root
+#	socket=/tmp/TEST.sock
+
+##Define the second server
+#mysql2
+#	user=root
+#	port=3456
+
+##Define the third server
+#mysql3
+#	user=root
+#	port=3456
+#	protocol=TCP
+
+
+# EXAMPLE_2. One config file for all hosts
+# NOTE: The configuration properties for exact server should be defined in MANDATORY tags: start.hostname=HOSTNAME and end.hostname. There should be nothing between two separate host configuration blocks
+
+#start.hostname = HOSTNAME_1 
+##Define the first server
+#mysql1
+#	user=root
+#	password=root
+#	socket=/tmp/TEST.sock
+
+##Define the second server
+#mysql2
+#	user=root
+#	port=3456
+#end.hostname
+	 
+#start.hostname = HOSTNAME_2	
+##Define the first server
+#mysql1
+#	user=root
+
+##Define the second server
+#mysql2
+#	user=root
+#	socket=””
+#	path="/usr/bin/mysql"
+	
+##Define the third server
+#mysql3
+#	user=root
+#	port=3456
+#	protocol=TCP
+#end.hostname

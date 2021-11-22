@@ -1,0 +1,89 @@
+# version:1.0
+# config.txt - 2019/02/28
+# Configuration File for win.any.WAServerV4 collector
+
+# Define WAS server authorization parameters 
+#
+# MULIINSTANCE SUPPORT
+#
+# There are 2 section types for the multiinstance support: "default" and "instX", where X - a sequential number of the instance in this config file. 
+# If you have just one instance to check then "default" section MUST NOT be used. Only "inst1" section must exist with parameters specified.
+# If there are two or more instances then "default" MAY be included in config file. This section is OPTIONAL.
+# The "default" section contains common parameters for all "instX" sections. But you may set all parameters separately in instX sections.
+# The "instX" section (where X - a sequential number) contains parameters specific for the instance. This section is REQUIRED. 
+# Parameter value found in instX section overrides the value set for the same parameter in the "default" section (if it is present). 
+#
+# ATTENTION!
+# Values that are set below for parameters are just samples and must be replaced with actual ones.
+#
+# ATTENTION!
+# It's not necessary to put values in double quotes
+#
+# ATTENTION!
+# If you use specific characters in password they must be escaped according to the cmd.exe escape characters rules
+#
+# PARAMETERS 
+#
+# user				- the Server ID the wsadmin script runs with.
+#				  	If the WAS server Securiy is not ON, you can keep it empty or put the empty string "".
+#					
+# password   		- its password
+#				  	If the WAS server Securiy is not ON, you can keep it empty or put the empty string "". 
+#
+# ATTENTION: ad-server-id and ad-password are DEPRICATED and will work some time for compatibility.
+# 
+# ATTENTION: If the WAS server Security is On, the user and password parameters can be skipped in case    
+#				when those parameters are specified in the server's soap.client.props file. 
+#
+# ad-soap-port			- the SOAP connector port (The default SOAP port for a single-server installation is 8880).
+#				  The parameter is mandatory.
+# INSTALL_PATH		- WAS installation path 
+#				ATTENTION. For the WAS from version 6.0 this path should look like that:
+#				"D:\Program Files\WebSphere\AppServer\profiles\<server_name>"
+#				  The parameter is mandatory.
+# ad-was-home			- WAS profile path 
+#				ATTENTION. 
+#				The parameter should be specified in the case when the profile is situated
+#				not in the WAS installation path.
+#				The parameter is optional.
+# ad-gsk7kit-instl-pth		- the installation path of gsk7kit
+#				Hint: Please, check - gsk7cmd.exe command should start from its directory not giving any errors.
+#				The parameter is optional.
+# ad-password-key-file		- the password of the key file (for the dummy key file - WebAS). The parameter is optional.
+# ad-password-trs-file		- the password of the trust file (for the dummy trust file - WebAS). The parameter is optional.
+# ad-installpath-allfiles-check - to check or not all files permissions in the was INSTALLROOT path - "yes" or "no". 
+#				ATENTION. By default even if nothing is specified for this parameter, 
+#				the collector interprets it as "yes".
+#					
+# ad-was-host			- optional parameter. The name of the WAS deployment manager host.
+# ad-ssl-alias			- optional parameter.This parameter indicate the used SSL configuration. 
+#						  This is a synthetic way for the user to specify which SSL Key File and Trust File are currently used by the WAS server.
+# The "authorization-parameters" tag is obligatory
+# ATTENTION: if password contains specific characters, they should be escaped according to cmd.exe escape characters rules
+#authorization-parameters
+#	inst1
+#		user = wsadmin
+#		password = Aa123465
+#		ad-gsk7kit-instl-pth = "C:\Program Files (x86)\IBM\gsk7"
+#		ad-soap-port = 8880	        
+#		INSTALL_PATH = "C:\Program Files (x86)\IBM\WebSphere\AppServer\profiles\AppSrv01"  
+#		ad-installpath-allfiles-check = no    
+#		ad-was-host = localhost
+
+# Define files to check permissions (this section is OPTIONAL)
+# Use tag "files-to-check" to define this section
+# Under this tag should be a list of files, separated by new line 
+# AdminScript - is used for files, which are admin tool scripts
+# InstallRoot - is used for files from <Install_Root> directory
+# Security - is used for path to security.xml
+# files-to-check
+#	AdminScript = /bin/wsadmin.bat 
+#	Security = /config/cells/
+
+# Define files with encrypted passwords(this section is OPTIONAL)
+# Use tag "files-with-ecnrypted-passwords" to define this section
+# Under this tag should be a list of files, separated by new line, to check not encrypted passwords
+# files-with-ecnrypted-passwords
+#	file = /properties/sas.client.props
+#	file = /properties/soap.client.props
+     

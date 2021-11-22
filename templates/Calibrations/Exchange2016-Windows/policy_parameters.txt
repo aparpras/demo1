@@ -1,0 +1,27 @@
+# version:1.0
+[string]
+ReceiveProtocolLoggingLevel=Verbose
+Date of Policy Modification=20211013
+AllowedOOFType=None
+SendProtocolLoggingLevel=Verbose
+Policy Version=v4.0
+POP3LoginType=SecureLogin
+IMAP4LoginType=SecureLogin
+ScriptExecutionLevel=RemoteSigned
+[integer]
+IssueWarningQuota=1991680
+DeletedItemRetention=14
+MaxSendMessageSize=25600
+PickupDirectoryMaxRecipientsPerMessage=5000
+MaxDevicePasswordFailedAttempts=5
+ProhibitSendReceiveQuota=2411520
+DevicePasswordHistory=8
+DevicePasswordLength=15
+DevicePolicyRefreshInterval=60
+MaxSendSize=25600
+DevicePasswordExpiration=90
+MailboxRetention=30
+ProhibitSendQuota=2097152
+MaxReceiveMessageSize=25600
+MaxInactivityTimeDeviceLock=900
+MaxReceiveSize=25600

@@ -1,0 +1,7 @@
+# version:1.0
+[string]
+Data of Policy Modification=20211011
+Policy Version=v7.0
+[string_list]
+Privileged Users='administrator','db2admin','managesrv','creator owner','system'
+Privileged Groups='local service','network service','db2admns','enterprise admins','creator owner','administrators','domain admins','enterprise administrators','enterprise operators','domain administrators','system'

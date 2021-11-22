@@ -1,0 +1,6 @@
+# version:1.0
+[string]
+invalidationTimeout non PCI server=30
+Data of Policy Modification=20211001
+invalidationTimeout PCI server=15
+Policy Version=CSDv5.1

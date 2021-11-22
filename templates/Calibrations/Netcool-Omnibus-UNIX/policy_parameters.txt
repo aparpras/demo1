@@ -1,0 +1,6 @@
+# version:1.0
+[string]
+Date of Policy Modification=20211006
+Policy Version=v6.0
+[string_list]
+Password Encryption='AES','AES_FIPS'

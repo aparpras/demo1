@@ -1,0 +1,214 @@
+---
+- hosts: all
+  strategy: free
+  become: true
+  become_user: root
+  gather_facts: false
+
+  vars:
+    gcm_version: 540
+    gcm_home: "/var/opt/ansible/GTS"
+    jre_home: "{{ gcm_home }}"
+    tools_home: "{{ gcm_home }}/tools"
+    policy_name: AnsibleTower-ITSSCSD_{{gcm_version}}
+    policy_home: "{{ gcm_home }}/__GCM/{{ policy_name }}"
+    vault_home: "{{policy_home}}/vault"
+    config_name: "ansible_tower_config.txt"
+    disable_os_detect: false
+    force_deploy: []
+    custom_files: []
+    supported_distro: "{{(('RedHat' in ansible_distribution) and (ansible_distribution_major_version | int >= 7)) or (('CentOS' in ansible_distribution) and (ansible_distribution_major_version | int >= 7))}}"
+    local_policy_path: ""
+    exclude_sections_path: ""
+    policy_parameter_path: ""
+    middleware_config_path: ""
+
+  pre_tasks:
+    - setup:
+        gather_subset:
+         - '!all'
+    - name: Verify OS Family, Distro and Version
+      fail:
+        msg: "This Security Compliance Scan can NOT be run as {{ ansible_distribution }} {{ ansible_distribution_major_version }} is not supported."
+      when: ((not supported_distro|bool) and not disable_os_detect|bool)
+      
+    - name: Set defaults that can be overriden per host
+      set_fact:
+        gcm_files_owner: "{{ gcm_files_owner | default('root') }}"
+        gcm_files_group: "{{ gcm_files_group | default('system' if ansible_system == 'AIX' else 'root') }}"
+        gcm_files_mode: "{{ gcm_files_mode | default('700') }}"
+
+  tasks:
+    - debug:
+        msg:
+          - " Project revision: {{ tower_project_revision }}"
+
+    - name: 'Print variable value'
+      debug: 
+        msg:
+          - "{{item}} : {{ lookup('vars',item) }}"
+      when:  vars[item] is defined
+      loop:
+        - force_deploy
+          
+    - name: Create GCM Directory Structure if NOT Exist
+      file:
+        path: "{{ item }}"
+        owner: "{{ gcm_files_owner }}"
+        group: "{{ gcm_files_group }}"
+        mode: "{{ gcm_files_mode }}"
+        recurse: yes
+        state: directory
+      with_items:
+        - "{{ gcm_home }}"
+        - "{{ policy_home }}"
+        - "{{ vault_home }}"
+        - "{{ tools_home }}"
+      tags:
+      - configuration
+
+    - name: 'Step 2: Prepare endpoint'
+      block:
+        - name: 'Step 2: Get bds child ip'
+          include_role:
+            name: ansible-role-bds-get-child-ip
+
+        - name: 'Step 2: Prepare servers'
+          include_role:
+            name: ansible-role-gts-cm-prepare
+          vars:
+            prepare_list: [jre]
+
+    - name: 'Step 2: Check if JRE installed...'
+      shell: "{{ gcm_home }}/jre/bin/java -version"
+      failed_when: false
+      changed_when: false
+      register: java_version_command
+      tags:
+      - check
+
+    - name: Check if Local Policy Installed...
+      stat:
+        path: "{{ policy_home }}/localpolicy.xml"
+      register: lp_file_attr
+      tags:
+      - check
+
+    - name: Check if Exclude Sections Installed...
+      stat:
+        path: "{{ policy_home }}/exclude_sections.txt"
+      register: exclude_file_attr
+      tags:
+      - check
+
+    - name: Check if Policy Parameters Installed...
+      stat:
+        path: "{{ policy_home }}/policy_parameters.txt"
+      register: pp_file_attr
+      tags:
+      - check
+
+    - name: Check if Middleware Config Installed...
+      stat:
+        path: "{{ vault_home }}/{{config_name}}"
+      register: mw_file_attr
+      tags:
+      - check
+
+    - name: 'Check if tools Installed...'
+      stat:
+        path: "{{ gcm_home }}/tools/TIMcipherPswdV3.jar"
+      register: tools_file_attr
+      tags:
+      - check
+
+    - name: Check if Installation Required...
+      set_fact:
+         local_policy_install: "{{('Local_Policy' in force_deploy or 'all' in force_deploy) or ('Local_Policy' in custom_files or 'all' in custom_files) and not lp_file_attr.stat.exists }}"
+         exclude_sections_install: "{{('Exclude_Sections' in force_deploy or 'all' in force_deploy) or ('Exclude_Sections' in custom_files or 'all' in custom_files) and not exclude_file_attr.stat.exists }}"
+         policy_parameters_install: "{{('Policy_Parameters' in force_deploy or 'all' in force_deploy) or ('Policy_Parameters' in custom_files or 'all' in custom_files) and not pp_file_attr.stat.exists }}"
+         middleware_config_install: "{{('Middleware_Configuration' in force_deploy or 'all' in force_deploy) or ('Middleware_Configuration' in custom_files or 'all' in custom_files) and not mw_file_attr.stat.exists }}"
+         tools_install: "{{ not tools_file_attr.stat.exists or 'tools' in force_deploy }}"
+         jre_install: "{{ java_version_command.rc == 0 or 'jre' in force_deploy }}"
+      tags:
+      - check
+
+    - debug:
+        msg:
+          - "Local Policy install required    : {{ local_policy_install }}"
+          - "Exclude Sections install required : {{ exclude_sections_install }}"
+          - "Policy Parameters install required: {{ policy_parameters_install }}"
+          - "Middleware install required: {{ middleware_config_install }}"
+
+    - name: Copy Local Policy...
+      copy:
+        src: "{{local_policy_path}}"
+        dest: "{{ policy_home }}/localpolicy.xml"
+        owner: "{{ gcm_files_owner }}"
+        group: "{{ gcm_files_group }}"
+        mode: "{{ gcm_files_mode }}"
+      when: local_policy_install and not local_policy_path|length == 0
+      tags:
+      - install
+
+    - name: Copy Exclude Sections...
+      copy:
+        src: "{{exclude_sections_path}}"
+        dest: "{{ policy_home }}/exclude_sections.txt"
+        owner: "{{ gcm_files_owner }}"
+        group: "{{ gcm_files_group }}"
+        mode: "{{ gcm_files_mode }}"
+      when: exclude_sections_install and not exclude_sections_path|length == 0
+      tags:
+      - install
+
+    - name: Copy Policy Parameters...
+      copy:
+        src: "{{policy_parameter_path}}"
+        dest: "{{ policy_home }}/policy_parameters.txt"
+        owner: "{{ gcm_files_owner }}"
+        group: "{{ gcm_files_group }}"
+        mode: "{{ gcm_files_mode }}"
+      when: policy_parameters_install and not policy_parameter_path|length == 0
+      tags:
+      - install
+
+    - name: 'Copy Tools...'
+      copy:
+        src: "files/tools/TIMcipherPswdV3.jar"
+        dest: "{{ gcm_home }}/tools/TIMcipherPswdV3.jar"
+      when: tools_install and jre_install and middleware_config_install and not middleware_config_path|length == 0
+      tags:
+      - install
+
+    - name: Copy Middleware Config File...
+      template:
+        src: "{{middleware_config_path}}"
+        dest: "{{ vault_home }}/{{config_name}}"
+        owner: "{{ gcm_files_owner }}"
+        group: "{{ gcm_files_group }}"
+        mode: "{{ gcm_files_mode }}"
+      when: middleware_config_install and not middleware_config_path|length == 0
+      tags:
+      - install
+
+    - name: 'Encrypt Middleware Config ...'
+      shell: "{{ gcm_home }}/jre/bin/java -jar {{ gcm_home }}/tools/TIMcipherPswdV3.jar {{ vault_home }}/{{config_name}}"
+      register: encrypt_exitcode
+      args:
+        chdir: "{{ policy_home }}"
+      when: jre_install and middleware_config_install and not middleware_config_path|length == 0
+      tags:
+      - run
+
+    - name: Remove Tools....
+      file:
+        path: "{{ tools_home }}/TIMcipherPswdV3.jar"
+        state: absent
+      when: tools_install and jre_install and middleware_config_install and not middleware_config_path|length == 0
+      tags:
+      - configuration
+
+    - name: Encription status...
+      debug: msg="Encryption Exit code {{encrypt_exitcode.rc}}"
+      when: jre_install and middleware_config_install and not middleware_config_path|length == 0

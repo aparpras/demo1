@@ -1,0 +1,23 @@
+# version:1.0
+[integer]
+Default trace=1
+Error log iterations=99
+Audit Login Attempts=3
+[string]
+Sever logins audit=SUCCESS AND FAILURE
+Data of Policy Modification=20211013
+Database Mail XPs=0
+Adhoc Distributed Queries=0
+xp cmdshell=0
+Remote admin connections=0
+Ole Automation Procedures=0
+Policy Version=v7.0
+Remote acess=0
+Auto close=off
+CLR assemblies enabled=0
+Scan for Startup Procs=0
+Assembly permissions=SAFE_ACCESS
+Trustworthy=off
+[string_list]
+Shared IDs=''
+Available databases='resource','distribution','master','model','msdb','tempdb'

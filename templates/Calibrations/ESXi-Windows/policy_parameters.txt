@@ -1,0 +1,10 @@
+# version:1.0
+[string]
+Data of Policy Modification=20210603
+Password complexity=%Retry=3 min=disabled,disabled,disabled,15,15
+DVFilter=
+Business Use Notice=%this%system%should%be%used%for%conducting%ibm%business%or%for%purposes%authorized%by%ibm%management%it%is%mandatory%to%comply%with%all%the%requirements%listed%in%the%applicable%security%policy%and%only%process%or%store%the%data%classes%approved%for%this%asset%type%use%is%subject%to%audit%at%any%time%by%ibm%management%
+Policy Version=3.1
+[integer]
+Lockout failed attempts=5
+Lockout duration=1800

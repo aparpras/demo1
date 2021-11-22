@@ -1,0 +1,9 @@
+# version:1.0
+[string]
+Data of Policy Modification=20180130
+Policy Version=v6.0
+[integer]
+MIN Number Count=1
+MIN Mixed Case Count=1
+MIN Special Char Count=1
+MIN Password Length=15

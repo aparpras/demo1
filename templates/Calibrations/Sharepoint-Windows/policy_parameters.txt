@@ -1,0 +1,18 @@
+# version:1.0
+[string]
+Claims based authentication=True
+Data of Policy Modification=20210507
+Event Severity=:placeholder:
+Policy Version=v5.0
+Bandwidth Limit=4294967295
+Trace Severity=:placeholder:
+Connection Limit=4294967295
+[integer]
+FBA Days To Keep Logs=180
+Days To Keep Logs=180
+HIPAA Days To Keep Logs=270
+PCI Days To Keep Logs=365
+PCI Connection Time Out=15
+Connection Time Out=30
+[string_list]
+Farm Service Account Groups='WSS_RESTRICTED_WP', 'WSS_ADMIN_WPG', 'WSS_WPG'

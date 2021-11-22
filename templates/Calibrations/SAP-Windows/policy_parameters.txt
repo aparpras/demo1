@@ -1,0 +1,15 @@
+# version:1.0
+[integer]
+session end=5
+TIMEOUT TO TRIGGER ABAP SYSTEM LOGOUT=1800
+user lock=5
+gw reg no conn info=11
+max idle initial=14
+history size=8
+user auto unlock=0
+PCI TIMEOUT TO TRIGGER ABAP SYSTEM LOGOUT=900
+min pwd length=15
+pwd exp time=90
+[string]
+Data of Policy Modification=20211004
+Policy Version=v7.0
